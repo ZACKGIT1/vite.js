@@ -22,10 +22,12 @@ jobs:
       - name: Type-check and build the app
         run: npm run build
 
-      - name: Set SSH key
+      - name: Set SSH key & known_host
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
           chmod 600 ~/.ssh/id_rsa
 
       - name: Copy files to server via scp
