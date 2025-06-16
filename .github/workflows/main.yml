@@ -1,0 +1,32 @@
+name: Build and Deploy Vite + Vue App
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check and build the app
+        run: npm run build
+
+      - name: Set SSH key
+        run: |
+          echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      - name: Copy files to server via scp
+        run: |
+          scp -i ~/.ssh/id_rsa -r dist/* ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/home/bitnami/stack/project/frontend
