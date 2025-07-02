@@ -1,4 +1,4 @@
-name: Build and Deploy Vite + Vue App
+name: Build and Deploy Vite + Vue Apps
 
 on:
   push:
