@@ -3,7 +3,7 @@ name: Build and Deploy Vite + Vue App
 on:
   push:
     branches:
-    - main
+    - dev
 
 jobs:
   build-and-deploy:
