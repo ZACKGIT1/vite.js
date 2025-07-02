@@ -37,23 +37,8 @@ jobs:
         env:
           BUILD_NUMBER: ${{ github.run_number }}
         run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << EOF
-            set -e
-            PROJECT_PATH="/home/bitnami/stack/project/frontend/"
-            BACKUP_PATH="/home/bitnami/temp"
-            BUILD_TAG="build-${BUILD_NUMBER}"
-
-            # Create temp directory if it doesn't exist
-            mkdir -p \$BACKUP_PATH
-
-            cd \$PROJECT_PATH || exit
-
-            # Backup old files if dist exists
-            if [ "\$(ls -A \$PROJECT_PATH)" ]; then
-              zip -r "\$BACKUP_PATH/\$BUILD_TAG.zip" ./*
-              rm -rf ./*
-            fi
-          EOF
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}
+          sh ./.github/scripts/backup.sh
 
           # Upload new build
           scp -i ~/.ssh/id_rsa -r dist/* ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/home/bitnami/stack/project/frontend/
