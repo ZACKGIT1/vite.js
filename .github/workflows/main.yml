@@ -38,7 +38,7 @@ jobs:
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << EOF
             set -e
-            PROJECT_PATH="/home/bitnami/stack/project/frontend/dist"
+            PROJECT_PATH="/home/bitnami/stack/project/frontend/"
             BACKUP_PATH="/home/bitnami/temp"
             BUILD_TAG="build-\$BUILD_NUMBER"
 
@@ -55,4 +55,4 @@ jobs:
           EOF
 
           # Upload new build
-          scp -i ~/.ssh/id_rsa -r dist/* ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/home/bitnami/stack/project/frontend/dist
+          scp -i ~/.ssh/id_rsa -r dist/* ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/home/bitnami/stack/project/frontend/
