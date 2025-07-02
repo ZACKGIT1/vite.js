@@ -40,7 +40,7 @@ jobs:
             set -e
             PROJECT_PATH="/home/bitnami/stack/project/frontend/"
             BACKUP_PATH="/home/bitnami/temp"
-            BUILD_TAG="build-\$BUILD_NUMBER"
+            BUILD_TAG="build-${BUILD_NUMBER}"
 
             # Create temp directory if it doesn't exist
             mkdir -p \$BACKUP_PATH
